@@ -1,10 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Wed_16._30_MD_G2_Server.Controllers
+namespace Wed_16._30_MD_G2_Server.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class HelloController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HelloController : ControllerBase
+    private readonly IWebHostEnvironment _environment;
+
+    public HelloController(IWebHostEnvironment environment)
     {
+        _environment = environment;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok($"Hello from {_environment.EnvironmentName} environment!");
     }
 }
