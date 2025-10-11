@@ -16,6 +16,6 @@ public class HelloController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok($"Hello from {_environment.EnvironmentName} environment!");
+        return Ok($"Hello from {_environment.EnvironmentName} environment v1!");
     }
 }
