@@ -2,7 +2,7 @@
 
 namespace Wed_16._30_MD_G2_Server.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class HelloController : ControllerBase
 {
