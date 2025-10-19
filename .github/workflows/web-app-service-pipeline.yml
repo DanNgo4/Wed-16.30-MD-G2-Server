@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -34,9 +34,34 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy_staging:
+  test:
     runs-on: windows-latest
     needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore (tests)
+        run: dotnet restore
+
+      - name: Run tests (Release)
+        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
+
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: .NET Tests
+          path: "**/test_results.trx"
+          reporter: dotnet-trx
+
+  deploy_staging:
+    runs-on: windows-latest
+    needs: [build, test]
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     
     steps:
@@ -56,7 +81,7 @@ jobs:
 
   deploy_production:
     runs-on: windows-latest
-    needs: build
+    needs: [build, test]
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     
     steps:
