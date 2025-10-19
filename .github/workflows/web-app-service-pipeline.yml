@@ -64,7 +64,7 @@ jobs:
             [
               {
                 "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                "value": "${{ secrets.APPINSIGHTS_CONNECTION }}",
+                "value": "${{ secrets.INSTRUMENTATIONKEY }}",
                 "slotSetting": false
               }
             ]
