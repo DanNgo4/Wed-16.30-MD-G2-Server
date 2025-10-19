@@ -56,6 +56,7 @@ jobs:
           
       - name: Monitoring Staging
         uses: azure/appservice-settings@v1
+        continue-on-error: true
         with:
           app-name: 'group2-staging'
           slot-name: 'Production'
