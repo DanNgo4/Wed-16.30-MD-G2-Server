@@ -50,11 +50,13 @@ jobs:
 
       - name: Run tests (Release)
         run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
-        
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results
+          path: |
+            **/test_results.trx
 
   deploy_staging:
     runs-on: windows-latest
