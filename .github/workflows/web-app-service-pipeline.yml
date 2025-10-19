@@ -53,7 +53,21 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C0F693524F3D4F47A258AA0160E8037C }}
-
+          
+      - name: Monitoring Staging
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'group2-staging'
+          slot-name: 'Production'
+          app-settings-json: |
+            [
+              {
+                "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                "value": "${{ secrets.APPINSIGHTS_CONNECTION }}",
+                "slotSetting": false
+              }
+            ]
+            
   deploy_production:
     runs-on: windows-latest
     needs: build
