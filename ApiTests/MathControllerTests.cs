@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Wed_16._30_MD_G2_Server.Controllers;
 using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace ApiTests;
 
