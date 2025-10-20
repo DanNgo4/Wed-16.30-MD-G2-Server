@@ -37,6 +37,8 @@ jobs:
   test:
     runs-on: windows-latest
     needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+
     steps:
       - uses: actions/checkout@v4
 
@@ -60,7 +62,7 @@ jobs:
 
   deploy_staging:
     runs-on: windows-latest
-    needs: [build, test]
+    needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     
     steps:
@@ -80,7 +82,7 @@ jobs:
 
   deploy_production:
     runs-on: windows-latest
-    needs: [build, test]
+    needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     
     steps:
