@@ -8,9 +8,12 @@ namespace Wed_16._30_MD_G2_Server.Controllers;
 [ApiController]
 public class MathController : ControllerBase
 {
-    private static readonly ILogger _logger = LoggerFactory
-    .Create(builder => builder.AddConsole())
-    .CreateLogger<MathController>();
+    private readonly ILogger<MathController> _logger;
+
+    public MathController(ILogger<MathController> logger)
+    {
+            _logger = logger;
+    }
     
     [HttpGet("sum")]
     public ActionResult<int> Get([Required] int firstNum, 
