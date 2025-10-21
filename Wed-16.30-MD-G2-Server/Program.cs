@@ -7,7 +7,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddApplicationInsightsTelemetry();
-        builder.Services.AddSingleton<Microsoft.ApplicationInsights.TelemetryClient>();
+
         
         builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 
