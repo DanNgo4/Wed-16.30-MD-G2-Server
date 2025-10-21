@@ -9,7 +9,7 @@ namespace Wed_16._30_MD_G2_Server.Controllers;
 public class MathController : ControllerBase
 {
     private readonly ILogger<MathController> _logger;
-    private readonly TelemetryClient _telemetryClient;
+   
 
     public MathController(ILogger<MathController> logger)
     {
@@ -23,7 +23,7 @@ public class MathController : ControllerBase
         int result = firstNum + secondNum;
         
         _logger.LogInformation($"[LOG STREAM] SUM endpoint called: {firstNum} + {secondNum} = {result}");
-        _telemetryClient.Flush();
+        
         
         return Ok(result);
     }
@@ -32,7 +32,7 @@ public class MathController : ControllerBase
     public ActionResult<string> Health()
     { 
         _logger.LogInformation($"[HEALTH CHECK] /math/health hit at {DateTime.UtcNow}");
-        _telemetryClient.Flush(); 
+        
         return Ok("Service is healthy");                                                                                                                          
     }    
 }
