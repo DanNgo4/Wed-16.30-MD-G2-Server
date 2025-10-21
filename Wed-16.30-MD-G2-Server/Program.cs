@@ -15,6 +15,14 @@ public class Program
 
         builder.Services.AddApplicationInsightsTelemetry();
 
+        builder.Logging.AddApplicationInsights(
+                configureTelemetryConfiguration: (config) => { },
+                configureApplicationInsightsLoggerOptions: (options) =>
+                {
+                    options.IncludeScopes = true;
+                    options.TrackExceptionsAsExceptionTelemetry = true;
+                });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
