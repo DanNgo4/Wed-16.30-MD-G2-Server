@@ -9,7 +9,6 @@ namespace Wed_16._30_MD_G2_Server.Controllers;
 public class MathController : ControllerBase
 {
     private readonly ILogger<MathController> _logger;
-   
 
     public MathController(ILogger<MathController> logger)
     {
