@@ -15,17 +15,15 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
+      - name: Build and publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
@@ -37,30 +35,32 @@ jobs:
   test:
     runs-on: windows-latest
     needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-
-      - name: Restore (tests)
-        run: dotnet restore
-
+          
       - name: Run tests (Release)
-        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx"
+      
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v1
         with:
-          name: test-results
+          name: .NET Tests
           path: |
             **/test_results.trx
+          reporter: dotnet-trx
 
   deploy_staging:
     runs-on: windows-latest
-    needs: [build, test]
+    needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
     
     steps:
@@ -80,7 +80,7 @@ jobs:
 
   deploy_production:
     runs-on: windows-latest
-    needs: [build, test]
+    needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     
     steps:

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
 namespace Wed_16._30_MD_G2_Server.Controllers;
@@ -8,9 +7,12 @@ namespace Wed_16._30_MD_G2_Server.Controllers;
 [ApiController]
 public class MathController : ControllerBase
 {
-    private static readonly ILogger _logger = LoggerFactory
-    .Create(builder => builder.AddConsole())
-    .CreateLogger<MathController>();
+    private readonly ILogger<MathController> _logger;
+
+    public MathController(ILogger<MathController> logger)
+    {
+        _logger = logger;
+    }
     
     [HttpGet("sum")]
     public ActionResult<int> Get([Required] int firstNum, 
@@ -20,6 +22,7 @@ public class MathController : ControllerBase
         
         _logger.LogInformation($"[LOG STREAM] SUM endpoint called: {firstNum} + {secondNum} = {result}");
         
+        
         return Ok(result);
     }
 
@@ -27,6 +30,7 @@ public class MathController : ControllerBase
     public ActionResult<string> Health()
     { 
         _logger.LogInformation($"[HEALTH CHECK] /math/health hit at {DateTime.UtcNow}");
+        
         return Ok("Service is healthy");                                                                                                                          
     }    
 }
