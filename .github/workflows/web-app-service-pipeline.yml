@@ -22,10 +22,7 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
+      - name: Build and publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
@@ -47,11 +44,8 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Restore (tests)
-        run: dotnet restore
-
       - name: Run tests (Release)
-        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test_results.trx"
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx"
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
