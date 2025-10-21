@@ -13,19 +13,26 @@ public class Program
         builder.Logging.AddDebug();
 
         // Add services to the container.
-        builder.Services.AddApplicationInsightsTelemetry();
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
+        builder.Services.AddApplicationInsightsTelemetry(options =>
+        {
+            options.EnableAdaptiveSampling = false; // Disable sampling to capture all logs
+        });
+        
         builder.Logging.AddApplicationInsights(
-                configureTelemetryConfiguration: (config) => { },
+                configureTelemetryConfiguration: (config) => 
+                {
+                    config.DisableTelemetry = false;
+                },
                 configureApplicationInsightsLoggerOptions: (options) =>
                 {
                     options.IncludeScopes = true;
                     options.TrackExceptionsAsExceptionTelemetry = true;
                 });
+        
+        builder.Services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
