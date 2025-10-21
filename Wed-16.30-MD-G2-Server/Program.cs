@@ -6,7 +6,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddApplicationInsightsTelemetry("InstrumentationKey=f3d57649-06a5-4957-87dd-db0d6fd61d03;IngestionEndpoint=https://australiaeast-1.in.applicationinsights.azure.com/");
+        builder.Services.AddApplicationInsightsTelemetry();
         
         builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 
