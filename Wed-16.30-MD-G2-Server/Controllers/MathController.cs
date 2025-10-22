@@ -18,7 +18,7 @@ public class MathController : ControllerBase
     public ActionResult<int> Get([Required] int firstNum, 
                                  [Required] int secondNum)
     {
-        int result = firstNum + secondNum;
+        int result = firstNum + secondNum + 1;
         
         _logger.LogInformation($"[LOG STREAM] SUM endpoint called: {firstNum} + {secondNum} = {result}");
         
