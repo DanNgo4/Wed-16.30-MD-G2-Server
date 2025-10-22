@@ -31,6 +31,6 @@ public class MathController : ControllerBase
     { 
         _logger.LogInformation($"[HEALTH CHECK] /math/health hit at {DateTime.UtcNow}");
         
-        return Ok("Service is healthy");                                                                                                                          
+        return Ok("Service is healthyyyyyyyyy");                                                                                                                          
     }    
 }
