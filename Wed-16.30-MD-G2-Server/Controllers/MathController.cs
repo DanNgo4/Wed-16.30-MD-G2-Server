@@ -18,7 +18,7 @@ public class MathController : ControllerBase
     public ActionResult<int> Get([Required] int firstNum, 
                                  [Required] int secondNum)
     {
-        int result = firstNum + secondNum + 1;
+        int result = firstNum + secondNum;
         
         _logger.LogInformation($"[LOG STREAM] SUM endpoint called: {firstNum} + {secondNum} = {result}");
         
@@ -31,6 +31,6 @@ public class MathController : ControllerBase
     { 
         _logger.LogInformation($"[HEALTH CHECK] /math/health hit at {DateTime.UtcNow}");
         
-        return Ok("Service is healthy");                                                                                                                          
+        return Ok("Service is healthyyyyyyyyy");                                                                                                                          
     }    
 }
