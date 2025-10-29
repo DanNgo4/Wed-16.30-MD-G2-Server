@@ -26,9 +26,5 @@ public sealed class HelloControllerTests
 
         var message = obj?.Value;
         Assert.AreEqual($"Hello from {envName} environment!", message);
-
-        /*Assert.Contains(envName, message);
-        Assert.StartsWith("Hello from ", message);
-        Assert.EndsWith(" environment!", message);*/
     }
 }
