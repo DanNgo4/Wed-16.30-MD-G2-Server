@@ -14,6 +14,7 @@ public class MathController : ControllerBase
         _logger = logger;
     }
     
+    // GET /math/sum?firstNum={int}&secondNum={int} (e.g, GET https://localhost:7207/math/sum?firstNum=12&secondNum=21)
     [HttpGet("sum")]
     public ActionResult<int> Get([Required] int firstNum, 
                                  [Required] int secondNum)
@@ -26,6 +27,7 @@ public class MathController : ControllerBase
         return Ok(result);
     }
 
+    // GET /math/health (e.g, GET https://localhost:7207/health)
     [HttpGet("health")]
     public ActionResult<string> Health()
     { 

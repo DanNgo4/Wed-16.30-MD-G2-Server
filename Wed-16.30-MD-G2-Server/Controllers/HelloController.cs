@@ -13,6 +13,7 @@ public class HelloController : ControllerBase
         _environment = environment;
     }
 
+    // GET /hello (e.g, GET https://localhost:7207/hello)
     [HttpGet]
     public ActionResult<string> Get()
     {
